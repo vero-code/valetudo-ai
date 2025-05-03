@@ -9,6 +9,13 @@ export default function HeroSection() {
             placeholder="What to do if a 5-year-old feels dizzy?"
           />
         </div>
+        <div>
+          <p>...or use prepared templates</p>
+          <p><a href="/ask" className="text-blue-500 hover:underline">
+              Go to Ask Page
+              </a>
+          </p>
+        </div>
       </section>
     );
   }
