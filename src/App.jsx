@@ -1,14 +1,14 @@
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
 
 function App() {
   return (
-    <>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-900">
-      <h1 className="text-3xl font-bold underline text-blue-600">
-        Hello, it's Valetudo AI!
-      </h1>
-    </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
+    </Router>
   )
 }
 
