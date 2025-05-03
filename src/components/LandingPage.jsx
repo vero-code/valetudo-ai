@@ -5,6 +5,7 @@ import AudienceSection from './landing/AudienceSection';
 import HowItWorksSection from './landing/HowItWorksSection';
 import ExamplesSection from './landing/ExamplesSection';
 import DisclaimerSection from './landing/DisclaimerSection';
+import CTASection from './landing/CTASection';
 
 export default function LandingPage() {
   return (
@@ -16,6 +17,7 @@ export default function LandingPage() {
       <HowItWorksSection />
       <ExamplesSection />
       <DisclaimerSection />
+      <CTASection />
     </div>
   );
 }
