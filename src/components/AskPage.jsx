@@ -84,6 +84,7 @@ export default function AskPage() {
         <input
           key={name}
           name={name}
+          value={inputs[name] || ''}
           placeholder={placeholder}
           onChange={handleInputChange}
           onFocus={() => {
@@ -186,7 +187,15 @@ export default function AskPage() {
     setTimeout(() => {
       setFollowupResult(`This is a mock follow-up answer to:\n"${followup}"`);
     }, 500);
-  };  
+  };
+
+  const handleClear = () => {
+    setInputs({});
+    setErrors({});
+    setResult('');
+    setFollowup('');
+    setFollowupResult('');
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen py-12 px-4">
@@ -231,6 +240,13 @@ export default function AskPage() {
             </Link>
             <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer">
               🔍 Ask
+            </button>
+            <button
+              type="button"
+              onClick={handleClear}
+              className="bg-red-100 text-red-700 px-6 py-2 rounded-lg hover:bg-red-200 transition cursor-pointer"
+            >
+              🧹 Clear
             </button>
           </div>
         </form>
