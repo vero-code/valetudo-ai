@@ -9,15 +9,50 @@ import CTASection from './landing/CTASection';
 
 export default function LandingPage() {
   return (
-    <div className="text-gray-800 bg-white">
+    <main className="bg-gray-50 text-gray-800 font-sans">
       <HeroSection />
-      <ProblemSection />
-      <HelpSection />
-      <AudienceSection />
-      <HowItWorksSection />
-      <ExamplesSection />
-      <DisclaimerSection />
-      <CTASection />
-    </div>
+
+      <section className="bg-white py-20">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <ProblemSection />
+        </div>
+      </section>
+
+      <section className="bg-blue-50 py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <HelpSection />
+        </div>
+      </section>
+
+      <section className="bg-white py-20">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <AudienceSection />
+        </div>
+      </section>
+
+      <section className="bg-blue-50 py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <HowItWorksSection />
+        </div>
+      </section>
+
+      <section className="bg-white py-20">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <ExamplesSection />
+        </div>
+      </section>
+
+      <section className="bg-red-50 py-20">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <DisclaimerSection />
+        </div>
+      </section>
+
+      <section className="bg-blue-600 py-20">
+        <div className="max-w-2xl mx-auto px-6 text-center text-white">
+          <CTASection />
+        </div>
+      </section>
+    </main>
   );
 }
