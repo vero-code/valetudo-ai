@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { promptTemplates, examplesByCategory, categoryOptions } from '../constants/prompts';
+import { mockAnswers } from '../constants/mockAnswers';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
   const [inputs, setInputs] = useState({});
   const [result, setResult] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -13,10 +15,17 @@ export default function AskPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setResult('');
 
     const prompt = generatePrompt(category, inputs);
-    setResult(`(Here would be API call with prompt):\n\n"${prompt}"`);
-    // TODO: replace with real API call
+
+    // Simulate loading delay
+    setTimeout(() => {
+      const answer = mockAnswers[category] || "No data available for this category.";
+      setResult(`${answer}\n\n📝 Prompt used:\n"${prompt}"`);
+      setLoading(false);
+    }, 2000);
   };
 
   const generatePrompt = (type, values) => {
@@ -134,9 +143,15 @@ export default function AskPage() {
         </div>
       </form>
 
+      {loading && (
+        <div className="mt-6 text-center text-blue-600 font-medium">
+          🔄 Thinking...
+        </div>
+      )}
+
       {result && (
         <div className="mt-6 bg-gray-100 p-4 rounded shadow-sm">
-          <h2 className="font-semibold mb-2">Prompt preview:</h2>
+          <h2 className="font-semibold mb-2">🧠 AI Answer:</h2>
           <pre className="whitespace-pre-wrap">{result}</pre>
         </div>
       )}
