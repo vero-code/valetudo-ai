@@ -5,6 +5,8 @@ export const promptTemplates = {
   timing: 'I took [drug1]. How long should I wait before taking [drug2]?',
   alternatives: 'What are safer alternatives to [drug1]?',
   compare: 'Compare effectiveness of [drug1] vs [drug2] for [condition].',
+  exercises: 'What exercises are recommended for someone with [symptom or condition]?',
+  research: 'What are the latest research findings about [symptom or condition]?',
 };
 
 export const examplesByCategory = {
@@ -26,6 +28,12 @@ export const examplesByCategory = {
   compare: [
     "Effectiveness of Ibuprofen versus Paracetamol for pain treatment.",
   ],
+  exercises: [
+    "What exercises are recommended for someone with lower back pain?",
+  ],
+  research: [
+    "What are the latest research findings about migraine treatment?",
+  ],
 };
 
 export const categoryOptions = [
@@ -35,4 +43,6 @@ export const categoryOptions = [
   { value: 'timing', label: '⏱ Drug timing' },
   { value: 'alternatives', label: '✅ Safer alternatives' },
   { value: 'compare', label: '⚖️ Compare effectiveness' },
+  { value: 'exercises', label: '🏃 Recommended exercises' },
+  { value: 'research', label: '🧬 Latest research' },
 ];

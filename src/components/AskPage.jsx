@@ -33,6 +33,10 @@ export default function AskPage() {
         return `What are safer alternatives to ${values.drug1}?`;
       case 'compare':
         return `Compare effectiveness of ${values.drug1} vs ${values.drug2} for ${values.condition}.`;
+      case 'exercises':
+        return `What exercises are recommended for someone with ${values.condition}?`;
+      case 'research':
+        return `What are the latest research findings about ${values.condition}?`;
       default:
         return '';
     }
@@ -71,6 +75,16 @@ export default function AskPage() {
         );
       case 'alternatives':
         return <input name="drug1" placeholder="Drug" onChange={handleInputChange} className="input" />;
+      case 'exercises':
+      case 'research':
+        return (
+          <input
+            name="condition"
+            placeholder="Symptom or condition (e.g. back pain)"
+            onChange={handleInputChange}
+            className="input"
+          />
+        );
       default:
         return null;
     }
