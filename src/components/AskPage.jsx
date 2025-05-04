@@ -25,15 +25,13 @@ export default function AskPage() {
       const answer = mockAnswers[category] || "No data available for this category.";
       setResult(`${answer}\n\n📝 Prompt used:\n"${prompt}"`);
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const generatePrompt = (type, values) => {
     switch (type) {
       case 'symptom':
         return `What should I do if ${values.symptom} occurs in a ${values.age} year old ${values.gender}?`;
-      case 'followup':
-        return `What if the patient has ${values.condition}?`;
       case 'drugs':
         return `Can I take ${values.drug1} and ${values.drug2} together?`;
       case 'timing':
@@ -55,45 +53,76 @@ export default function AskPage() {
     switch (category) {
       case 'symptom':
         return (
-          <>
-            <input name="symptom" placeholder="Symptom" onChange={handleInputChange} className="input" />
-            <input name="age" placeholder="Age" onChange={handleInputChange} className="input" />
-            <input name="gender" placeholder="Gender" onChange={handleInputChange} className="input" />
-          </>
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <input name="gender" placeholder="Gender" onChange={handleInputChange} className="input w-32" />
+            <input name="age" placeholder="Age" onChange={handleInputChange} className="input w-32" />
+            <span>years old,</span>
+            <input name="symptom" placeholder="Symptom" onChange={handleInputChange} className="input w-32" />
+            <span>. Any recommendations?</span>
+          </div>
         );
-      case 'followup':
-        return (
-          <input
-            name="condition"
-            placeholder="Condition or disease (e.g. hypertension)"
-            onChange={handleInputChange}
-            className="input"
-          />
-        );
+  
       case 'drugs':
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <span>Can I take</span>
+            <input name="drug1" placeholder="Drug 1" onChange={handleInputChange} className="input w-32" />
+            <span>and</span>
+            <input name="drug2" placeholder="Drug 2" onChange={handleInputChange} className="input w-32" />
+            <span>together?</span>
+          </div>
+        );
+  
       case 'timing':
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <span>The patient took</span>
+            <input name="drug1" placeholder="Drug 1" onChange={handleInputChange} className="input w-32" />
+            <span>. How long should they wait before taking</span>
+            <input name="drug2" placeholder="Drug 2" onChange={handleInputChange} className="input w-32" />
+            <span>?</span>
+          </div>
+        );
+  
       case 'compare':
         return (
-          <>
-            <input name="drug1" placeholder="Drug 1" onChange={handleInputChange} className="input" />
-            <input name="drug2" placeholder="Drug 2" onChange={handleInputChange} className="input" />
-            {category === 'compare' && (
-              <input name="condition" placeholder="Condition" onChange={handleInputChange} className="input" />
-            )}
-          </>
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <span>Compare effectiveness of</span>
+            <input name="drug1" placeholder="Drug 1" onChange={handleInputChange} className="input w-32" />
+            <span>vs</span>
+            <input name="drug2" placeholder="Drug 2" onChange={handleInputChange} className="input w-32" />
+            <span>for</span>
+            <input name="condition" placeholder="Condition" onChange={handleInputChange} className="input w-32" />
+          </div>
         );
+  
       case 'alternatives':
-        return <input name="drug1" placeholder="Drug" onChange={handleInputChange} className="input" />;
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <span>What are safer alternatives to</span>
+            <input name="drug1" placeholder="Drug" onChange={handleInputChange} className="input w-32" />
+            <span>?</span>
+          </div>
+        );
+  
       case 'exercises':
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <span>What exercises are recommended for someone with</span>
+            <input name="condition" placeholder="Condition" onChange={handleInputChange} className="input w-48" />
+            <span>?</span>
+          </div>
+        );
+  
       case 'research':
         return (
-          <input
-            name="condition"
-            placeholder="Symptom or condition (e.g. back pain)"
-            onChange={handleInputChange}
-            className="input"
-          />
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-700">
+            <span>What are the latest research findings about</span>
+            <input name="condition" placeholder="Condition" onChange={handleInputChange} className="input w-48" />
+            <span>?</span>
+          </div>
         );
+  
       default:
         return null;
     }
@@ -151,9 +180,9 @@ export default function AskPage() {
         )}
 
         {result && (
-            <div className="mt-8 bg-gray-100 border border-gray-300 p-5 rounded-lg shadow-sm">
-              <h2 className="font-semibold text-blue-700 mb-2">🧠 AI Answer:</h2>
-              <pre className="whitespace-pre-wrap text-gray-800">{result}</pre>
+          <div className="mt-6 bg-white border border-gray-200 p-4 rounded-xl shadow-sm text-left">
+            <h2 className="font-semibold mb-2 text-blue-600">🧠 AI Answer:</h2>
+            <pre className="whitespace-pre-wrap text-gray-800">{result}</pre>
           </div>
         )}
       </div>

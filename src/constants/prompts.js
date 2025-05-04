@@ -1,6 +1,5 @@
 export const promptTemplates = {
   symptom: 'What should I do if [symptom] occurs in a [age] year old [gender]?',
-  followup: 'What if the patient has [condition]?',
   drugs: 'Can I take [drug1] and [drug2] together?',
   timing: 'I took [drug1]. How long should I wait before taking [drug2]?',
   alternatives: 'What are safer alternatives to [drug1]?',
@@ -11,10 +10,7 @@ export const promptTemplates = {
 
 export const examplesByCategory = {
   symptom: [
-    "What should I do if a 20-year-old man has sudden weakness and dizziness?",
-  ],
-  followup: [
-    "What if the patient has hypertension?",
+    "Male 20 years old, sudden weakness and dizziness. Any recommendations?",
   ],
   drugs: [
     "Can I take Paracetamol and No-Spa together?",
@@ -26,7 +22,7 @@ export const examplesByCategory = {
     "Find safer alternatives or combinations than Spazmalgon.",
   ],
   compare: [
-    "Effectiveness of Ibuprofen versus Paracetamol for pain treatment.",
+    "Compare effectiveness of Ibuprofen vs Paracetamol for pain treatment.",
   ],
   exercises: [
     "What exercises are recommended for someone with lower back pain?",
@@ -38,7 +34,6 @@ export const examplesByCategory = {
 
 export const categoryOptions = [
   { value: 'symptom', label: '💬 Recommendation' },
-  { value: 'followup', label: '🔄 Follow-up condition' },
   { value: 'drugs', label: '🧪 Drug compatibility' },
   { value: 'timing', label: '⏱ Drug timing' },
   { value: 'alternatives', label: '✅ Safer alternatives' },
