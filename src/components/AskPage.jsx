@@ -100,61 +100,63 @@ export default function AskPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Ask the Assistant</h1>
+    <div className="bg-gray-50 min-h-screen py-12 px-4">
+      <div className="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8">
+        <h1 className="text-3xl font-bold text-blue-600 mb-6 text-center">Ask the Assistant</h1>
 
-      <label className="block mb-2 font-semibold">Select category:</label>
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="mb-4 p-2 border rounded w-full"
-      >
-        {categoryOptions.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
+        <label className="block mb-2 font-semibold text-gray-700">Select category:</label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-gray-800 mb-6"
+        >
+          {categoryOptions.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        {renderFields()}
-        {examplesByCategory[category] && (
-          <div className="mt-4 bg-gray-50 border border-gray-200 p-4 rounded text-sm text-gray-600">
-            <p className="font-medium mb-2">Example question:</p>
-            <ul className="list-disc list-inside space-y-1">
-              {examplesByCategory[category].map((ex, i) => (
-                <li key={i}>{ex}</li>
-              ))}
-            </ul>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {renderFields()}
+
+          {examplesByCategory[category] && (
+              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-800">
+              <p className="font-medium mb-2">Example question:</p>
+              <ul className="list-disc list-inside space-y-1">
+                {examplesByCategory[category].map((ex, i) => (
+                  <li key={i}>{ex}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/"
+              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
+            >
+              ← Back
+            </Link>
+            <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+              🔍 Ask
+            </button>
+          </div>
+        </form>
+
+        {loading && (
+          <div className="mt-6 text-center text-blue-600 font-medium">
+            🔄 Thinking...
           </div>
         )}
 
-        <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
-          <Link
-            to="/"
-            className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
-          >
-            ← Back
-          </Link>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-            🔍 Ask
-          </button>
-          
-        </div>
-      </form>
-
-      {loading && (
-        <div className="mt-6 text-center text-blue-600 font-medium">
-          🔄 Thinking...
-        </div>
-      )}
-
-      {result && (
-        <div className="mt-6 bg-gray-100 p-4 rounded shadow-sm">
-          <h2 className="font-semibold mb-2">🧠 AI Answer:</h2>
-          <pre className="whitespace-pre-wrap">{result}</pre>
-        </div>
-      )}
+        {result && (
+            <div className="mt-8 bg-gray-100 border border-gray-300 p-5 rounded-lg shadow-sm">
+              <h2 className="font-semibold text-blue-700 mb-2">🧠 AI Answer:</h2>
+              <pre className="whitespace-pre-wrap text-gray-800">{result}</pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
