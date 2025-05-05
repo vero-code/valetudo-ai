@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { examplesByCategory, categoryOptions } from '../constants/prompts';
 import { validateInputs } from '../utils/validationUtils';
 import { askAssistant } from '../utils/apiClient';
+import { useNavigate } from 'react-router-dom';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
@@ -12,6 +12,7 @@ export default function AskPage() {
   const [followup, setFollowup] = useState('');
   const [followupResult, setFollowupResult] = useState('');
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -197,6 +198,10 @@ export default function AskPage() {
     setFollowupResult('');
   };
 
+  const handleGoToBack = () => {
+    navigate('/');
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen py-12 px-4">
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8">
@@ -231,13 +236,14 @@ export default function AskPage() {
             </div>
           )}
 
-          <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/"
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
+          <div className="grid sm:grid-cols-3 gap-4">
+            <button
+              type="button"
+              onClick={handleGoToBack}
+              className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition cursor-pointer"
             >
-              ← Back
-            </Link>
+              ⬅️ Back
+            </button>
             <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer">
               🔍 Ask
             </button>
