@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { askAssistant } from '../../utils/apiClient';
 
 export default function HeroSection() {
   const [quickQuestion, setQuickQuestion] = useState('');
@@ -7,20 +8,17 @@ export default function HeroSection() {
   const [loading, setLoading] = useState(false);
   const [showFull, setShowFull] = useState(false);
 
-  const handleQuickSubmit = () => {
+  const handleQuickSubmit = async () => {
     if (!quickQuestion.trim()) return;
 
     setLoading(true);
     setQuickAnswer('');
     setShowFull(false);
 
-    // Simulating a mock response
-    setTimeout(() => {
-      setQuickAnswer(
-        "🧠 This is a mock answer. Real-time verified medical info will appear here.\n\n🔎 Question:\n" + quickQuestion
-      );
-      setLoading(false);
-    }, 1500);
+    const answer = await askAssistant({ prompt: quickQuestion });
+    setQuickAnswer(answer || 'An error occurred while contacting the assistant.');
+  
+    setLoading(false);
   };
 
   return (

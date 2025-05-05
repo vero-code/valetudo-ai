@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { examplesByCategory, categoryOptions } from '../constants/prompts';
 import { validateInputs } from '../utils/validationUtils';
-import { mockAnswers } from '../constants/mockAnswers';
+import { askAssistant } from '../utils/apiClient';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
@@ -41,23 +41,9 @@ export default function AskPage() {
     setFollowupResult('');
 
     const prompt = generatePrompt(category, inputs);
+    const answer = await askAssistant({ prompt });
+    setResult({ prompt, answer: answer || 'An error occurred while contacting the assistant.' });
 
-    try {
-      const response = await fetch('http://localhost:5000/api/ask', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt }),
-      });
-    
-      const data = await response.json();
-      console.log(data);
-      setResult({ prompt, answer: data.answer });
-    } catch (error) {
-      console.error('API error:', error);
-      setResult({ prompt, answer: 'An error occurred while contacting the assistant.' });
-    }
     setLoading(false);
   };
 
@@ -191,13 +177,15 @@ export default function AskPage() {
     }
   };
 
-  const handleFollowup = () => {
+  const handleFollowup = async () => {
     if (!followup.trim()) return;
     setFollowupResult("Thinking...");
   
-    setTimeout(() => {
-      setFollowupResult(`This is a mock follow-up answer to:\n"${followup}"`);
-    }, 500);
+    const answer = await askAssistant({
+      prompt: result.prompt,
+      followup: followup
+    });
+    setFollowupResult(answer || "An error occurred while contacting the assistant.");
   };
 
   const handleClear = (newCategory) => {
