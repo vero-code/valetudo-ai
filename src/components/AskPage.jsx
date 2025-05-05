@@ -42,12 +42,23 @@ export default function AskPage() {
 
     const prompt = generatePrompt(category, inputs);
 
-    // Simulate loading delay
-    setTimeout(() => {
-      const answer = mockAnswers[category] || "No data available for this category.";
-      setResult({ prompt, answer});
-      setLoading(false);
-    }, 500);
+    try {
+      const response = await fetch('http://localhost:5000/api/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+    
+      const data = await response.json();
+      console.log(data);
+      setResult({ prompt, answer: data.answer });
+    } catch (error) {
+      console.error('API error:', error);
+      setResult({ prompt, answer: 'An error occurred while contacting the assistant.' });
+    }
+    setLoading(false);
   };
 
   const generatePrompt = (type, values) => {
@@ -189,7 +200,8 @@ export default function AskPage() {
     }, 500);
   };
 
-  const handleClear = () => {
+  const handleClear = (newCategory) => {
+    if (newCategory) setCategory(newCategory);
     setInputs({});
     setErrors({});
     setResult('');
@@ -206,7 +218,7 @@ export default function AskPage() {
           <label className="font-semibold text-gray-700 whitespace-nowrap">Select category:</label>
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => handleClear(e.target.value)}
             className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm text-gray-800"
           >
             {categoryOptions.map(({ value, label }) => (
@@ -243,7 +255,7 @@ export default function AskPage() {
             </button>
             <button
               type="button"
-              onClick={handleClear}
+              onClick={() => handleClear()}
               className="bg-red-100 text-red-700 px-6 py-2 rounded-lg hover:bg-red-200 transition cursor-pointer"
             >
               🧹 Clear
