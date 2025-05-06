@@ -66,7 +66,7 @@ export default function HeroSection() {
       style={{ backgroundImage }}
       className="relative min-h-screen grid place-content-center px-6 py-24 text-gray-900 bg-white overflow-hidden "
     >
-      <div className="relative z-10 text-center max-w-3xl mx-auto">
+      <div className="relative z-10 text-center max-w-2xl mx-auto">
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4 bg-gradient-to-br text-gray-800 bg-clip-text">
           Trusted medical answers in seconds
         </h1>

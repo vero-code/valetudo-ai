@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
-import ProblemSection from "./landing/ProblemSection";
-import HelpSection from "./landing/HelpSection";
-import AudienceSection from "./landing/AudienceSection";
+import ProblemSection from "./parallax/ProblemSection";
+import SolutionSection from "./parallax/SolutionSection";
+import AudienceSection from "./parallax/AudienceSection";
 
-export const TextParallaxContentSection = () => {
+export const AboutSection = () => {
   return (
     <div className="bg-white">
       <TextParallaxContent
@@ -20,7 +19,7 @@ export const TextParallaxContentSection = () => {
         subheading="Precise recommendations"
         heading="Instant help."
       >
-        <HelpSection />
+        <SolutionSection />
       </TextParallaxContent>
       <TextParallaxContent
         imgUrl="https://images.unsplash.com/photo-1559734840-f9509ee5677f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -111,26 +110,3 @@ const OverlayCopy = ({ subheading, heading }) => {
     </motion.div>
   );
 };
-
-const ExampleContent = () => (
-  <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
-    <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
-      Additional content explaining the above card here
-    </h2>
-    <div className="col-span-1 md:col-span-8">
-      <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-        blanditiis soluta eius quam modi aliquam quaerat odit deleniti minima
-        maiores voluptate est ut saepe accusantium maxime doloremque nulla
-        consectetur possimus.
-      </p>
-      <p className="mb-8 text-xl text-neutral-600 md:text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        reiciendis blanditiis aliquam aut fugit sint.
-      </p>
-      <button className="w-full rounded bg-neutral-900 px-9 py-4 text-xl text-white transition-colors hover:bg-neutral-700 md:w-fit">
-        Learn more <FiArrowUpRight className="inline" />
-      </button>
-    </div>
-  </div>
-);
