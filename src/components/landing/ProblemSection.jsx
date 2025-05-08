@@ -13,7 +13,7 @@ const ProblemSection = () => {
             evidence-based information. Empowering patients, families, and caregivers.
           </p>
         </div>
-        <div className="w-full md:w-1/2 flex justify-end pr-[63px]">
+        <div className="w-full md:w-1/2 flex justify-end">
           <img
             src="/hero-tablet.png"
             alt="Tablet with AI Assistant"
