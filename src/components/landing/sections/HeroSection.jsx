@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { askAssistant } from '../../utils/apiClient';
+import { askAssistant } from '../../../utils/apiClient';
 import { useNavigate } from 'react-router-dom';
 import { Canvas } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
@@ -64,13 +64,13 @@ export default function HeroSection() {
   return (
     <motion.section
       style={{ backgroundImage }}
-      className="relative min-h-screen grid place-content-center px-6 py-24 text-gray-900 bg-white overflow-hidden "
+      className="relative min-h-screen grid place-content-center px-6 py-24 text-[#272D45] bg-white overflow-hidden "
     >
       <div className="relative z-10 text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4 bg-gradient-to-br text-gray-800 bg-clip-text">
+        <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4 bg-gradient-to-br text-[#272D45] bg-clip-text">
           Trusted medical answers in seconds
         </h1>
-        <p className="text-lg text-gray-600 mb-6">
+        <p className="text-lg text-[#272D45] mb-6">
           ⚕️ No fake news. No guessing. With real scientific sources.
         </p>
 
@@ -79,7 +79,7 @@ export default function HeroSection() {
           placeholder="What to do if a 5-year-old feels dizzy?"
           value={quickQuestion}
           onChange={(e) => setQuickQuestion(e.target.value)}
-          className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+          className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-[#272D45] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
         />
 
         <div className="flex flex-col items-center gap-2 mt-6">
@@ -109,7 +109,7 @@ export default function HeroSection() {
 
         {quickAnswer && (
           <div
-            className={`mt-6 bg-gray-50 border border-gray-200 p-5 rounded-xl shadow-md text-left text-gray-800 ${
+            className={`mt-6 bg-gray-50 border border-gray-200 p-5 rounded-xl shadow-md text-left text-[#272D45] ${
               showFull ? "max-h-96 overflow-y-auto" : ""
             }`}
           >
