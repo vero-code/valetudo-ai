@@ -7,32 +7,51 @@ import StepsSection from './landing/sections/StepsSection';
 import PrinciplesSection from './landing/sections/PrinciplesSection';
 import OfferSection from './landing/sections/OfferSection';
 import Footer from "./Footer";
+import ScrollToTopButton from './landing/ui/ScrollToTopButton';
+import AnimatedReveal from './AnimatedReveal';
 
 export default function LandingPage() {
   return (
-    <main className="bg-gray-50">
+    <main className="bg-white">
       <HeroSection />
       
-      <section className="bg-white">
-        <AboutSection />
-        <ProblemsSection />
+      <section>
+        <AnimatedReveal>
+          <AboutSection />
+        </AnimatedReveal>
+        <AnimatedReveal delay={0.1}>
+          <ProblemsSection />
+        </AnimatedReveal>
       </section>
       
-      <section className="bg-[#437066] min-h-screen py-20">
-        <BenefitsSection />
-        <AudienceSection />
+      <section className="bg-[#437066]">
+        <AnimatedReveal>
+          <BenefitsSection />
+        </AnimatedReveal>
+        <AnimatedReveal>
+          <AudienceSection />
+        </AnimatedReveal>
       </section>
       
-      <section className="bg-white">
-        <StepsSection />
-        <PrinciplesSection />
+      <section>
+        <AnimatedReveal>
+          <StepsSection />
+        </AnimatedReveal>
+        <AnimatedReveal>
+          <PrinciplesSection />
+        </AnimatedReveal>
       </section>
       
-      <section className=" bg-white">
-        <OfferSection />
+      <section>
+        <AnimatedReveal>
+          <OfferSection />
+        </AnimatedReveal>
       </section>
 
-      <Footer />
+      <AnimatedReveal>
+        <Footer />
+      </AnimatedReveal>
+      <ScrollToTopButton />
     </main>
   );
 }
