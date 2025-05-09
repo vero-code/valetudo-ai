@@ -4,9 +4,10 @@ import { examplesByCategory, categoryOptions } from '../constants/prompts';
 import { validateInputs } from '../utils/validationUtils';
 import { askAssistant } from '../utils/apiClient';
 import { generatePrompt } from '../utils/generatePrompt.jsx';
-import { renderFields } from '../utils/renderFields.jsx';
 import CategorySelect from './ui/CategorySelect.jsx';
-import { BackButton, AskButton, ClearButton, FollowUpButton } from './ui/Buttons';
+import { FollowUpButton } from './ui/Buttons';
+import AskForm from './ui/AskForm.jsx';
+import { handleClear, handleGoToBack } from '../utils/handlers';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
@@ -17,6 +18,9 @@ export default function AskPage() {
   const [followupResult, setFollowupResult] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const clearHandler = handleClear(setCategory, setInputs, setErrors, setResult, setFollowup, setFollowupResult);
+  const goToBackHandler = handleGoToBack(navigate);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -65,19 +69,6 @@ export default function AskPage() {
     setFollowupResult(answer || "An error occurred while contacting the assistant.");
   };
 
-  const handleClear = (newCategory) => {
-    if (newCategory) setCategory(newCategory);
-    setInputs({});
-    setErrors({});
-    setResult('');
-    setFollowup('');
-    setFollowupResult('');
-  };
-
-  const handleGoToBack = () => {
-    navigate('/');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#2980b9] to-[#dcefee] py-24 px-4">
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8">
@@ -92,26 +83,17 @@ export default function AskPage() {
           />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {renderFields(category, inputs, handleInputChange, errors, setErrors)}
-
-          {examplesByCategory[category] && (
-              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-800">
-              <p className="font-medium mb-2">Example question:</p>
-              <ul className="list-disc list-inside space-y-1">
-                {examplesByCategory[category].map((ex, i) => (
-                  <li key={i}>{ex}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="grid sm:grid-cols-3 gap-4">
-            <BackButton onClick={handleGoToBack} />
-            <AskButton />
-            <ClearButton onClick={() => handleClear()} />
-          </div>
-        </form>
+        <AskForm
+          category={category}
+          inputs={inputs}
+          handleInputChange={handleInputChange}
+          errors={errors}
+          setErrors={setErrors}
+          examplesByCategory={examplesByCategory}
+          handleGoToBack={goToBackHandler}
+          handleClear={clearHandler}
+          handleSubmit={handleSubmit}
+        />
 
         {loading && (
           <div className="mt-6 text-center text-blue-600 font-medium">
