@@ -1,4 +1,3 @@
-import React from "react";
 import { stepsData } from "../data/stepsData";
 
 const StepsGrid = () => (

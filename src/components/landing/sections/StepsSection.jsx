@@ -1,4 +1,3 @@
-import React from "react";
 import StepsGrid from "../grids/StepsGrid";
 
 const StepsSection = () => (

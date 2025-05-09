@@ -1,4 +1,4 @@
-import { StepIcon } from "../ui/StepIcon";
+import { StepIcon } from "../../ui/StepIcon";
 import { offerData } from "../data/offerData";
 
 const OfferGrid = () => (

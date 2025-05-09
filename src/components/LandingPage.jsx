@@ -7,7 +7,7 @@ import StepsSection from './landing/sections/StepsSection';
 import PrinciplesSection from './landing/sections/PrinciplesSection';
 import OfferSection from './landing/sections/OfferSection';
 import Footer from "./Footer";
-import ScrollToTopButton from './landing/ui/ScrollToTopButton';
+import ScrollToTopButton from './ui/ScrollToTopButton';
 import AnimatedReveal from './AnimatedReveal';
 
 export default function LandingPage() {
