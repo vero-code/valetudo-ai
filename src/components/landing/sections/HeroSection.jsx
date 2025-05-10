@@ -9,7 +9,7 @@ import {
   useMotionTemplate,
   animate,
 } from "framer-motion";
-import { MainAskButton, GoToPromptsButton } from '../../ui/Buttons';
+import { HomePageAskButton, GoToPromptPageButton } from '../../ui/Buttons';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
@@ -83,9 +83,9 @@ export default function HeroSection() {
           className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-[#272D45] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
         />
 
-        <div className="flex flex-row justify-center items-center gap-2 mt-6">
-          <MainAskButton onClick={handleQuickSubmit}/>
-          <GoToPromptsButton onClick={handleGoToAskPage} />
+        <div className="flex flex-row justify-center items-center gap-4 mt-6">
+          <HomePageAskButton onClick={handleQuickSubmit} />
+          <GoToPromptPageButton onClick={handleGoToAskPage} />
         </div>
 
         {loading && (

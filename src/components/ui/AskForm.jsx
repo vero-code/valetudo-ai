@@ -1,4 +1,4 @@
-import { BackButton, AskButton, ClearButton } from './Buttons.jsx';
+import { BackToHomeButton, PromptPageAskButton, ClearFormButton } from './Buttons.jsx';
 import { renderFields } from '../../utils/renderFields.jsx';
 
 export default function AskForm({
@@ -30,9 +30,9 @@ export default function AskForm({
       )}
 
       <div className="grid sm:grid-cols-3 gap-4">
-        <BackButton onClick={handleGoToBack} />
-        <AskButton />
-        <ClearButton onClick={() => handleClear()} />
+        <BackToHomeButton onClick={handleGoToBack} />
+        <PromptPageAskButton />
+        <ClearFormButton onClick={() => handleClear()} />
       </div>
     </form>
   );

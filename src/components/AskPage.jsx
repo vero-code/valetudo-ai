@@ -5,7 +5,7 @@ import { validateInputs } from '../utils/validationUtils';
 import { askAssistant } from '../utils/apiClient';
 import { generatePrompt } from '../utils/generatePrompt.jsx';
 import CategorySelect from './ui/CategorySelect.jsx';
-import { FollowUpButton } from './ui/Buttons';
+import { SubmitFollowUpButton } from './ui/Buttons';
 import AskForm from './ui/AskForm.jsx';
 import { handleClear, handleGoToBack } from '../utils/handlers';
 
@@ -131,7 +131,7 @@ export default function AskPage() {
                 value={followup}
                 onChange={(e) => setFollowup(e.target.value)}
               />
-              <FollowUpButton />
+              <SubmitFollowUpButton />
             </form>
             {followupResult && (
               <div className="mt-4 bg-white border border-gray-200 p-4 rounded-xl">
