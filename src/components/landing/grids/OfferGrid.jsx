@@ -7,8 +7,8 @@ const OfferGrid = () => (
       <li key={i} className="flex items-start gap-4">
         <StepIcon number={i + 1} />
         <div className="flex-1">
-          <span className="text-[22.5px] font-[300] font-[Kanit] text-[#272D45]">{f.title}</span>
-          <p className="text-[18px] font-['Martel_Sans'] text-[#272D45]">{f.desc}</p>
+          <span className="subheading">{f.title}</span>
+          <p className="body-text">{f.desc}</p>
         </div>
       </li>
     ))}

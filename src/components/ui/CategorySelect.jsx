@@ -21,9 +21,13 @@ const CategorySelect = ({ value, options, onChange, placeholder = "Select..." })
     <div className="relative w-full max-w-xs" ref={ref}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white flex justify-between items-center text-gray-800"
+        className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white flex justify-between items-center body-text"
       >
-        <span>{selectedOption?.label || placeholder}</span>
+        <span
+          className={`${
+            !selectedOption ? "text-gray-400 italic" : "body-text"
+          }`}
+        >{selectedOption?.label || placeholder}</span>
         <FiChevronDown
           className={`transform transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
@@ -38,7 +42,7 @@ const CategorySelect = ({ value, options, onChange, placeholder = "Select..." })
                 onChange(val);
                 setOpen(false);
               }}
-              className="p-3 hover:bg-gray-100 cursor-pointer text-gray-700"
+              className="p-3 hover:bg-gray-100 cursor-pointer body-text"
             >
               {label}
             </li>

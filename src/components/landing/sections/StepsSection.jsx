@@ -10,11 +10,11 @@ const StepsSection = () => (
       />
     </div>
     <div className="w-full md:w-1/2 pl-[63px] pr-[48px]">
-      <h1 className="text-[45px] font-[Kanit] text-[#272D45] mb-10">
+      <h1 className="heading mb-10">
         How Valetudo Works: Simple, Step-by-Step
       </h1>
       <StepsGrid />
-      <p className="text-[18px] font-['Martel_Sans'] text-[#272D45]">
+      <p className="body-text">
         Average response time is less than 3 seconds for quick support.
       </p>
     </div>

@@ -1,10 +1,8 @@
-import React from "react";
-
 const ProblemSection = () => {
   return (
     <div className="bg-[#437066] py-20">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg" style={{ padding: '50px 63px' }}>
-        <h2 className="text-[45px] font-[Kanit] mb-10">
+        <h2 className="heading mb-10">
           Problem: Navigating the Sea of Medical Misinformation
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -32,8 +30,8 @@ const ProblemSection = () => {
 
 const Card = ({ title, text }) => (
   <div className="bg-[#dfece9] rounded-lg p-[18px] border border-[#c8d7d2]">
-    <h3 className="text-[22.5px] font-[300] font-[Kanit] mb-6">{title}</h3>
-    <p className="text-[18px] font-[300] font-['Martel_Sans'] leading-snug tracking-normal">{text}</p>
+    <h3 className="subheading mb-6">{title}</h3>
+    <p className="body-text leading-snug tracking-normal">{text}</p>
   </div>
 );
 

@@ -14,12 +14,14 @@ export default function AskForm({
 }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {renderFields(category, inputs, handleInputChange, errors, setErrors)}
+      <div className="flex flex-wrap items-center justify-start gap-2 body-text">
+        {renderFields(category, inputs, handleInputChange, errors, setErrors)}
+      </div>
 
       {examplesByCategory[category] && (
         <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-800">
-          <p className="font-medium mb-2">Example question:</p>
-          <ul className="list-disc list-inside space-y-1">
+          <p className="body-text mb-2">Example question:</p>
+          <ul className="list-disc list-inside space-y-1 body-text">
             {examplesByCategory[category].map((ex, i) => (
               <li key={i}>{ex}</li>
             ))}

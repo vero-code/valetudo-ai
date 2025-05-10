@@ -72,10 +72,10 @@ export default function AskPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#2980b9] to-[#dcefee] py-24 px-4">
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8">
-        <h1 className="text-3xl font-bold text-blue-600 mb-6 text-center">Ask the Assistant</h1>
+        <h1 className="heading text-center mb-10">🩺 Ask the Assistant</h1>
 
         <div className="flex items-center gap-4 mb-6">
-          <label className="font-semibold text-gray-700 whitespace-nowrap">Select category:</label>
+          <label className="subheading">Select category:</label>
           <CategorySelect
             value={category}
             onChange={(val) => setCategory(val)}
@@ -96,7 +96,7 @@ export default function AskPage() {
         />
 
         {loading && (
-          <div className="mt-6 text-center text-blue-600 font-medium">
+          <div className="mt-6 body-text text-center">
             🔄 Thinking...
           </div>
         )}

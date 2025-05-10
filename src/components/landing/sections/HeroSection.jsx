@@ -9,6 +9,7 @@ import {
   useMotionTemplate,
   animate,
 } from "framer-motion";
+import { MainAskButton, GoToPromptsButton } from '../../ui/Buttons';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
@@ -67,10 +68,10 @@ export default function HeroSection() {
       className="relative min-h-screen grid place-content-center px-6 py-24 text-[#272D45] bg-white overflow-hidden "
     >
       <div className="relative z-10 text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4 bg-gradient-to-br text-[#272D45] bg-clip-text">
+        <h1 className="heading sm:text-5xl leading-tight mb-4 bg-gradient-to-br bg-clip-text">
           Trusted medical answers in seconds
         </h1>
-        <p className="text-lg text-[#272D45] mb-6">
+        <p className="subheading mb-6">
           ⚕️ No fake news. No guessing. With real scientific sources.
         </p>
 
@@ -82,25 +83,9 @@ export default function HeroSection() {
           className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-[#272D45] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
         />
 
-        <div className="flex flex-col items-center gap-2 mt-6">
-          <motion.button
-            onClick={handleQuickSubmit}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-6 py-3 rounded-full text-white font-semibold transition-all cursor-pointer bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            🔍 Ask AI
-          </motion.button>
-
-          <motion.button
-            onClick={handleGoToAskPage}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex flex-wrap justify-center items-center gap-1 px-6 py-3 mt-4 rounded-full border border-cyan-600 text-cyan-700 font-medium bg-white/60 backdrop-blur-sm hover:bg-cyan-50 hover:text-cyan-800 hover:ring-2 hover:ring-cyan-200 transition-all shadow-sm text-sm sm:text-base text-center cursor-pointer"
-          >
-            💡 Not sure what to ask?
-            <span className="underline underline-offset-2">Try a suggested question</span>
-          </motion.button>
+        <div className="flex flex-row justify-center items-center gap-2 mt-6">
+          <MainAskButton onClick={handleQuickSubmit}/>
+          <GoToPromptsButton onClick={handleGoToAskPage} />
         </div>
 
         {loading && (
