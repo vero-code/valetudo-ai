@@ -8,6 +8,7 @@ import { SubmitFollowUpButton } from './ui/Buttons';
 import AskForm from './ui/AskForm.jsx';
 import { handleClear, handleGoToBack } from '../utils/handlers';
 import { useAIAnswer } from '../hooks/useAIAnswer';
+import QuickAnswerBox from '../components/ui/QuickAnswerBox.jsx';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
@@ -15,6 +16,7 @@ export default function AskPage() {
   const [followup, setFollowup] = useState('');
   const [errors, setErrors] = useState({});
   const [result, setResult] = useState(null);
+  const [showFull, setShowFull] = useState(false);
   const navigate = useNavigate();
 
   const { answer, citations, loading, ask } = useAIAnswer({ useMock: true });
@@ -46,6 +48,7 @@ export default function AskPage() {
     e.preventDefault();
     if (!validate()) return;
     setFollowup('');
+    setShowFull(false);
     setResult(null);
 
     const prompt = generatePrompt(category, inputs);
@@ -91,31 +94,12 @@ export default function AskPage() {
         )}
 
         {result && !loading && (
-          <>
-            <div className="mt-6 bg-blue-50 border border-blue-200 p-4 rounded-xl">
-              <p className="subheading mb-2">Prompt used:</p>
-              <pre className="body-text italic whitespace-pre-wrap mb-4">{result.prompt}</pre>
-            </div>
-            <div className="mt-6 bg-blue-50 border border-blue-200 p-4 rounded-xl">
-              <h2 className="text-blue-600 font-semibold mb-2">🤖 AI Answer:</h2>
-              <pre className="bg-white border border-gray-200 p-4 rounded text-gray-800 whitespace-pre-wrap">{answer}</pre>
-
-              {citations.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="font-semibold">Sources:</h4>
-                  <ol className="list-decimal list-inside text-blue-600 text-sm mt-2">
-                    {citations.map((url, i) => (
-                      <li key={i}>
-                        <a href={url} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                          {url}
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              )}
-            </div>
-          </>
+          <QuickAnswerBox
+            quickAnswer={answer}
+            showFull={showFull}
+            setShowFull={setShowFull}
+            citations={citations}
+          />
         )}
 
         {result && !loading && (
