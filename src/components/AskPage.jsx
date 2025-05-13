@@ -2,24 +2,25 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { examplesByCategory, categoryOptions } from '../constants/prompts';
 import { validateInputs } from '../utils/validationUtils';
-import { askAssistant } from '../utils/apiClient';
 import { generatePrompt } from '../utils/generatePrompt.jsx';
 import CategorySelect from './ui/CategorySelect.jsx';
 import { SubmitFollowUpButton } from './ui/Buttons';
 import AskForm from './ui/AskForm.jsx';
 import { handleClear, handleGoToBack } from '../utils/handlers';
+import { useAIAnswer } from '../hooks/useAIAnswer';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
   const [inputs, setInputs] = useState({});
-  const [result, setResult] = useState('');
-  const [loading, setLoading] = useState(false);
   const [followup, setFollowup] = useState('');
-  const [followupResult, setFollowupResult] = useState('');
   const [errors, setErrors] = useState({});
+  const [result, setResult] = useState(null);
   const navigate = useNavigate();
 
-  const clearHandler = handleClear(setCategory, setInputs, setErrors, setResult, setFollowup, setFollowupResult);
+  const { answer, citations, loading, ask } = useAIAnswer({ useMock: true });
+  const { answer: followupAnswer, ask: askFollowup } = useAIAnswer({ useMock: true });
+
+  const clearHandler = handleClear(setCategory, setInputs, setErrors, setResult, setFollowup, () => {});
   const goToBackHandler = handleGoToBack(navigate);
 
   const handleInputChange = (e) => {
@@ -44,29 +45,17 @@ export default function AskPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    setLoading(true);
-    setResult('');
     setFollowup('');
-    setFollowupResult('');
+    setResult(null);
 
     const prompt = generatePrompt(category, inputs);
-    // const answer = await askAssistant({ prompt });
-    const answer = "Answer example"
-    setResult({ prompt, answer: answer || 'An error occurred while contacting the assistant.' });
-
-    setLoading(false);
+    await ask({ prompt });
+    setResult({ prompt });
   };
 
   const handleFollowup = async () => {
     if (!followup.trim()) return;
-    setFollowupResult("Thinking...");
-  
-    // const answer = await askAssistant({
-    //   prompt: result.prompt,
-    //   followup: followup
-    // });
-    const answer = "Answer example";
-    setFollowupResult(answer || "An error occurred while contacting the assistant.");
+    await askFollowup({ prompt: result.prompt, followup });
   };
 
   return (
@@ -104,12 +93,27 @@ export default function AskPage() {
         {result && !loading && (
           <>
             <div className="mt-6 bg-blue-50 border border-blue-200 p-4 rounded-xl">
-              <p className="text-sm text-gray-500 italic mb-2">Prompt used:</p>
-              <pre className="text-gray-800 whitespace-pre-wrap mb-4">{result.prompt}</pre>
+              <p className="subheading mb-2">Prompt used:</p>
+              <pre className="body-text italic whitespace-pre-wrap mb-4">{result.prompt}</pre>
             </div>
             <div className="mt-6 bg-blue-50 border border-blue-200 p-4 rounded-xl">
               <h2 className="text-blue-600 font-semibold mb-2">🤖 AI Answer:</h2>
-              <pre className="bg-white border border-gray-200 p-4 rounded text-gray-800 whitespace-pre-wrap">{result.answer}</pre>
+              <pre className="bg-white border border-gray-200 p-4 rounded text-gray-800 whitespace-pre-wrap">{answer}</pre>
+
+              {citations.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="font-semibold">Sources:</h4>
+                  <ol className="list-decimal list-inside text-blue-600 text-sm mt-2">
+                    {citations.map((url, i) => (
+                      <li key={i}>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                          {url}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
             </div>
           </>
         )}
@@ -126,17 +130,17 @@ export default function AskPage() {
             >
               <input
                 type="text"
-                placeholder="e.g. What if the patient also has hypertension?"
+                placeholder="e.g. What if the I also has hypertension?"
                 className="input w-full"
                 value={followup}
                 onChange={(e) => setFollowup(e.target.value)}
               />
               <SubmitFollowUpButton />
             </form>
-            {followupResult && (
+            {followup && followupAnswer && (
               <div className="mt-4 bg-white border border-gray-200 p-4 rounded-xl">
                 <h3 className="font-semibold text-blue-600 mb-2">🔁 Follow-up Answer:</h3>
-                <pre className="whitespace-pre-wrap text-gray-800">{followupResult}</pre>
+                <pre className="whitespace-pre-wrap text-gray-800">{followupAnswer}</pre>
               </div>
             )}
           </div>

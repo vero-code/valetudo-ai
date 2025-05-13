@@ -20,12 +20,12 @@ export default function AskForm({
 
       {examplesByCategory[category] && (
         <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-800">
-          <p className="body-text mb-2">Example question:</p>
-          <ul className="list-disc list-inside space-y-1 body-text">
-            {examplesByCategory[category].map((ex, i) => (
-              <li key={i}>{ex}</li>
-            ))}
-          </ul>
+          <p className="subheading mb-2">Example question:</p>
+          {examplesByCategory[category].map((ex, i) => (
+            <p key={i} className="body-text italic">
+              {ex}
+            </p>
+          ))}
         </div>
       )}
 
