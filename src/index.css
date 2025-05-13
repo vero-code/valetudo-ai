@@ -33,3 +33,10 @@ a {
 button {
   cursor: pointer;
 }
+
+.citation-tooltip {
+  color: #2563eb;
+  cursor: pointer;
+  border-bottom: 1px dotted #2563eb;
+  position: relative;
+}

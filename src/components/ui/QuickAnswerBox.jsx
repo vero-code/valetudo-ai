@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 /**
  * Component for displaying AI response.
@@ -10,6 +11,8 @@ import ReactMarkdown from 'react-markdown';
  * @param {(val: boolean) => void} setShowFull
  */
 export default function QuickAnswerBox({ title, quickAnswer, citations = [], showFull, setShowFull }) {
+  const enhancedMarkdown = enhanceCitations(quickAnswer, citations);
+
   return (
     <div
       className={`mt-6 bg-gray-50 border border-gray-200 p-5 rounded-xl shadow-md text-left text-[#272D45] ${
@@ -19,8 +22,10 @@ export default function QuickAnswerBox({ title, quickAnswer, citations = [], sho
       {title && <h2 className="text-blue-600 font-semibold mb-2">{title}</h2>}
 
       <div className="prose prose-sm max-w-none whitespace-pre-wrap body-text">
-        <ReactMarkdown>
-          {showFull ? quickAnswer : quickAnswer.split("\n").slice(0, 3).join("\n")}
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+          {showFull
+            ? enhancedMarkdown
+            : enhanceCitations(quickAnswer.split("\n").slice(0, 3).join("\n"), citations)}
         </ReactMarkdown>
       </div>
 
@@ -58,4 +63,16 @@ export default function QuickAnswerBox({ title, quickAnswer, citations = [], sho
       )}
     </div>
   );
+}
+
+function enhanceCitations(markdown, citations) {
+  return markdown.replace(/\[(\d+)]/g, (match, index) => {
+    const i = parseInt(index) - 1;
+    const url = citations?.[i];
+    if (!url) return match;
+
+    const domain = new URL(url).hostname;
+
+    return `<span class="citation-tooltip" title="${domain}">[${index}]</span>`;
+  });
 }
