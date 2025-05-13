@@ -8,3 +8,12 @@ export const mockAnswer = {
     "https://www.citizenshospitals.com/blogs/12-ways-to-increase-hemoglobin-levels"
   ]
 };
+
+export const mockAnswerFollowup = {
+  answer: `Managing high blood pressure often involves a combination of lifestyle changes and sometimes medication. Key lifestyle modifications include maintaining a healthy weight, regular physical activity, and adopting a balanced diet low in sodium and rich in potassium and magnesium [1][2]. Limiting alcohol consumption and avoiding smoking are also crucial steps [3]. Stress management techniques, like mindfulness or yoga, can further support blood pressure control [4]. Always consult with a healthcare professional to determine the best management plan for your individual needs.`,
+  citations: [
+    "https://www.cdc.gov/heartdisease/high_blood_pressure_prevent.htm",
+    "https://www.mayoclinic.org/diseases-conditions/high-blood-pressure/diagnosis-treatment/drc-20373417",
+    "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure",
+  ]
+};

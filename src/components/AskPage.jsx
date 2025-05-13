@@ -17,10 +17,11 @@ export default function AskPage() {
   const [errors, setErrors] = useState({});
   const [result, setResult] = useState(null);
   const [showFull, setShowFull] = useState(false);
+  const [showFollowupFull, setShowFollowupFull] = useState(false);
   const navigate = useNavigate();
 
   const { answer, citations, loading, ask } = useAIAnswer({ useMock: true });
-  const { answer: followupAnswer, ask: askFollowup } = useAIAnswer({ useMock: true });
+  const { answer: followupAnswer, citations: followupCitations, ask: askFollowup } = useAIAnswer({ useMock: true });
 
   const clearHandler = handleClear(setCategory, setInputs, setErrors, setResult, setFollowup, () => {});
   const goToBackHandler = handleGoToBack(navigate);
@@ -63,7 +64,7 @@ export default function AskPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#2980b9] to-[#dcefee] py-24 px-4">
-      <div className="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8">
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-8">
         <h1 className="heading text-center mb-10">🩺 Ask the Assistant</h1>
 
         <div className="flex items-center gap-4 mb-6">
@@ -95,6 +96,7 @@ export default function AskPage() {
 
         {result && !loading && (
           <QuickAnswerBox
+            title="🤖 AI Answer"
             quickAnswer={answer}
             showFull={showFull}
             setShowFull={setShowFull}
@@ -104,7 +106,7 @@ export default function AskPage() {
 
         {result && !loading && (
           <div className="mt-6">
-            <label className="block mb-2 font-medium text-gray-700">Want to ask a follow-up?</label>
+            <label className="block subheading mb-2">Want to ask a follow-up?</label>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -122,10 +124,13 @@ export default function AskPage() {
               <SubmitFollowUpButton />
             </form>
             {followup && followupAnswer && (
-              <div className="mt-4 bg-white border border-gray-200 p-4 rounded-xl">
-                <h3 className="font-semibold text-blue-600 mb-2">🔁 Follow-up Answer:</h3>
-                <pre className="whitespace-pre-wrap text-gray-800">{followupAnswer}</pre>
-              </div>
+              <QuickAnswerBox
+                title="🔁 Follow-up Answer"
+                quickAnswer={followupAnswer}
+                showFull={showFollowupFull}
+                setShowFull={setShowFollowupFull}
+                citations={followupCitations}
+              />
             )}
           </div>
         )}

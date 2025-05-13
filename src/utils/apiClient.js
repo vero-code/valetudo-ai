@@ -1,4 +1,4 @@
-import { mockAnswer } from '../constants/mockAnswers';
+import { mockAnswer, mockAnswerFollowup } from '../constants/mockAnswers';
 
 /**
  * Universal method for getting a response from the assistant.
@@ -10,6 +10,9 @@ import { mockAnswer } from '../constants/mockAnswers';
  */
 export async function getAnswer({ prompt, followup = null, useMock = false }) {
   if (useMock) {
+    if (followup) {
+      return mockAnswerFollowup;
+    }
     return mockAnswer;
   }
 

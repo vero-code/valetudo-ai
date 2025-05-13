@@ -25,9 +25,6 @@ export default function HeroSection() {
     linear-gradient(180deg, ${color}, #ffffff)
   `;
 
-  const border = useMotionTemplate`1px solid ${color}`;
-  const boxShadow = useMotionTemplate`0 0 0.5rem ${color}`;
-
   useEffect(() => {
     animate(color, COLORS, {
       ease: "easeInOut",
@@ -79,6 +76,7 @@ export default function HeroSection() {
 
         {quickAnswer && (
           <QuickAnswerBox
+            title="🤖 AI Answer"
             quickAnswer={quickAnswer}
             showFull={showFull}
             setShowFull={setShowFull}
