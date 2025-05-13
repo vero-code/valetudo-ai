@@ -48,12 +48,18 @@ def ask():
             model="sonar",
             messages=messages,
         )
-        content = response.choices[0].message.content
 
         print("Prompt sent to API:", messages)
-        print("Raw API response:", response)
+        print("Raw API response dict:", response.model_dump())
 
-        return jsonify({"answer": content})
+        content = response.choices[0].message.content
+        citations = getattr(response, "citations", [])
+
+        return jsonify({
+            "answer": content,
+            "citations": citations
+        })
+    
     except Exception as e:
         return jsonify({"error": "Failed to get response", "details": str(e)}), 500
 

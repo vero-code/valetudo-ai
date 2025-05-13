@@ -10,7 +10,11 @@ export async function askAssistant({ prompt, followup = null }) {
 
     const data = await response.json();
     if (!response.ok) throw new Error(`API Error: ${response.status}`);
-    return data.answer;
+
+    return {
+      answer: data.answer,
+      citations: data.citations || [],
+    };
   } catch (error) {
     console.error('API error:', error);
     return null;

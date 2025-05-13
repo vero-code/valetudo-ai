@@ -10,12 +10,15 @@ import {
   animate,
 } from "framer-motion";
 import { HomePageAskButton, GoToPromptPageButton } from '../../ui/Buttons';
+import ReactMarkdown from 'react-markdown';
+import { mockAnswer } from "../../../constants/mockAnswers";
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
 export default function HeroSection() {
   const [quickQuestion, setQuickQuestion] = useState('');
   const [quickAnswer, setQuickAnswer] = useState('');
+  const [citations, setCitations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showFull, setShowFull] = useState(false);
   const navigate = useNavigate();
@@ -27,6 +30,8 @@ export default function HeroSection() {
 
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0 0 0.5rem ${color}`;
+
+  const useMock = true;
 
   useEffect(() => {
     animate(color, COLORS, {
@@ -42,20 +47,24 @@ export default function HeroSection() {
 
     setLoading(true);
     setQuickAnswer('');
+    setCitations([]);
     setShowFull(false);
 
-    // Real API call
-    // const answer = await askAssistant({ prompt: quickQuestion });
-    // setQuickAnswer(answer || 'An error occurred while contacting the assistant.');
-    // setLoading(false);
-
-    // Simulating a mock response
-    setTimeout(() => {
-      setQuickAnswer(
-        "🧠 This is a mock answer. Real-time verified medical info will appear here.\n\n🔎 Question:\n" + quickQuestion
-      );
-      setLoading(false);
-    }, 2000);
+    let answerObj;
+    if (useMock) {
+      answerObj = mockAnswer;
+    } else {
+      answerObj = await askAssistant({ prompt: quickQuestion });
+      if (!answerObj) {
+        setQuickAnswer("❌ Failed to load answer.");
+        setLoading(false);
+        return;
+      }
+    }
+   
+    setQuickAnswer(answerObj.answer);
+    setCitations(answerObj.citations || []);
+    setLoading(false);
   };
 
   const handleGoToAskPage = () => {
@@ -98,13 +107,10 @@ export default function HeroSection() {
               showFull ? "max-h-96 overflow-y-auto" : ""
             }`}
           >
-            <pre
-              className={`whitespace-pre-wrap transition-all duration-300 ${
-                showFull ? "" : "line-clamp-3"
-              }`}
-            >
-              {quickAnswer}
-            </pre>
+            <div className="prose prose-sm max-w-none whitespace-pre-wrap">
+              <ReactMarkdown>{quickAnswer}</ReactMarkdown>
+            </div>
+
             {!showFull && quickAnswer.split("\n").length > 3 && (
               <button
                 onClick={() => setShowFull(true)}
@@ -112,6 +118,21 @@ export default function HeroSection() {
               >
                 Show full answer →
               </button>
+            )}
+
+            {citations.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <h4 className="font-semibold mb-2">Sources:</h4>
+                <ol className="list-decimal list-inside space-y-1 text-blue-600 text-sm">
+                  {citations.map((url, idx) => (
+                    <li key={idx}>
+                      <a href={url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        {url}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             )}
           </div>
         )}

@@ -1,9 +1,10 @@
-export const mockAnswers = {
-  symptom: "In most cases, dizziness in a 20-year-old male is not urgent. Hydration and rest may help. Consult a doctor if symptoms persist. Source: Mayo Clinic.",
-  drugs: "Paracetamol and No-Spa can generally be taken together. No known major interactions. Source: Drugs.com.",
-  timing: "You should wait at least 4–6 hours between Ibuprofen and Amiodarone. Source: WebMD.",
-  alternatives: "Spazmalgon may cause side effects. Consider using Ibuprofen and Paracetamol instead. Source: WHO Guidelines.",
-  compare: "Recent studies show Ibuprofen is slightly more effective for inflammatory pain. Source: PubMed 2024.",
-  exercises: "Exercises for lower back pain include pelvic tilts, knee-to-chest stretches, and hamstring stretches. Source: Cleveland Clinic.",
-  research: "Recent research on migraines supports CGRP inhibitors as effective options. Source: The Lancet 2023.",
+export const mockAnswer = {
+  answer: `To increase hemoglobin levels, focus on consuming foods rich in iron, such as red meat, poultry, fish, and plant-based sources like spinach and beans, and pair them with vitamin C-rich foods like oranges and bell peppers to enhance iron absorption[1][2][3]. Additionally, include folate-rich foods like black-eyed peas and avocado to support hemoglobin production[4][5]. Consider consulting a healthcare provider if you need supplements or further guidance.`,
+  citations: [
+    "https://www.medicinenet.com/how_do_i_increase_my_hemoglobin/article.htm",
+    "https://www.ucihealth.org/medical-services/blood-donations/hemoglobin",
+    "https://www.carterbloodcare.org/education-center/faqs/what-can-i-eat-to-raise-my-hemoglobin-iron-levels/",
+    "https://www.healthline.com/health/how-to-increase-hemoglobin",
+    "https://www.citizenshospitals.com/blogs/12-ways-to-increase-hemoglobin-levels"
+  ]
 };
