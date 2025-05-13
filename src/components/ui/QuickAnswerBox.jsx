@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import TooltipCitation from './TooltipCitation';
 
 /**
  * Component for displaying AI response.
@@ -22,10 +23,23 @@ export default function QuickAnswerBox({ title, quickAnswer, citations = [], sho
       {title && <h2 className="text-blue-600 font-semibold mb-2">{title}</h2>}
 
       <div className="prose prose-sm max-w-none whitespace-pre-wrap body-text">
-        <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+        <ReactMarkdown
+          rehypePlugins={[rehypeRaw]}
+          components={{
+            'tooltip-citation': ({ node, ...props }) => {
+              const domain = props['data-domain'];
+              const index = props['data-index'];
+              const url = props['data-url'];
+              return <TooltipCitation domain={domain} url={url} index={index} />;
+            }
+          }}
+        >
           {showFull
             ? enhancedMarkdown
-            : enhanceCitations(quickAnswer.split("\n").slice(0, 3).join("\n"), citations)}
+            : enhanceCitations(
+                quickAnswer.split("\n").slice(0, 3).join("\n"),
+                citations
+              )}
         </ReactMarkdown>
       </div>
 
@@ -72,7 +86,6 @@ function enhanceCitations(markdown, citations) {
     if (!url) return match;
 
     const domain = new URL(url).hostname;
-
-    return `<span class="citation-tooltip" title="${domain}">[${index}]</span>`;
+    return `<tooltip-citation data-index="${index}" data-domain="${domain}" data-url="${url}">[${index}]</tooltip-citation>`;
   });
 }
