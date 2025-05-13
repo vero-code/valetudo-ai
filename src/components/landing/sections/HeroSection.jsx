@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { askAssistant } from '../../../utils/apiClient';
 import { useNavigate } from 'react-router-dom';
 import { Canvas } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
@@ -11,14 +10,13 @@ import {
 } from "framer-motion";
 import { HomePageAskButton, GoToPromptPageButton } from '../../ui/Buttons';
 import ReactMarkdown from 'react-markdown';
+import { useAIAnswer } from '../../../hooks/useAIAnswer';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
 export default function HeroSection() {
   const [quickQuestion, setQuickQuestion] = useState('');
-  const [quickAnswer, setQuickAnswer] = useState('');
-  const [citations, setCitations] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { answer: quickAnswer, citations, loading, error, ask } = useAIAnswer({ useMock: true });
   const [showFull, setShowFull] = useState(false);
   const navigate = useNavigate();
 
@@ -29,8 +27,6 @@ export default function HeroSection() {
 
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0 0 0.5rem ${color}`;
-
-  const useMock = true;
 
   useEffect(() => {
     animate(color, COLORS, {
@@ -43,26 +39,8 @@ export default function HeroSection() {
 
   const handleQuickSubmit = async () => {
     if (!quickQuestion.trim()) return;
-
-    setLoading(true);
-    setQuickAnswer('');
-    setCitations([]);
     setShowFull(false);
-
-    const answerObj = await askAssistant({
-      prompt: quickQuestion,
-      useMock,
-    })
-
-    if (!answerObj) {
-      setQuickAnswer("❌ Failed to load answer.");
-      setLoading(false);
-      return;
-    }
-   
-    setQuickAnswer(answerObj.answer);
-    setCitations(answerObj.citations || []);
-    setLoading(false);
+    await ask({ prompt: quickQuestion});
   };
 
   const handleGoToAskPage = () => {

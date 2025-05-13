@@ -8,7 +8,7 @@ import { mockAnswer } from '../constants/mockAnswers';
  * @param {boolean} [options.useMock] - whether to use a mock response (defaults to false)
  * @returns {Promise<{ answer: string, citations: string[] } | null>}
  */
-export async function askAssistant({ prompt, followup = null, useMock = false }) {
+export async function getAnswer({ prompt, followup = null, useMock = false }) {
   if (useMock) {
     return mockAnswer;
   }
