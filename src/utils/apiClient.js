@@ -1,4 +1,18 @@
-export async function askAssistant({ prompt, followup = null }) {
+import { mockAnswer } from '../constants/mockAnswers';
+
+/**
+ * Universal method for getting a response from the assistant.
+ * @param {Object} options
+ * @param {string} options.prompt - the main question
+ * @param {string|null} [options.followup] - additional question / follow-up question
+ * @param {boolean} [options.useMock] - whether to use a mock response (defaults to false)
+ * @returns {Promise<{ answer: string, citations: string[] } | null>}
+ */
+export async function askAssistant({ prompt, followup = null, useMock = false }) {
+  if (useMock) {
+    return mockAnswer;
+  }
+
   try {
     const response = await fetch('http://localhost:5000/api/ask', {
       method: 'POST',

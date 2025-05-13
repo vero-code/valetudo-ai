@@ -11,7 +11,6 @@ import {
 } from "framer-motion";
 import { HomePageAskButton, GoToPromptPageButton } from '../../ui/Buttons';
 import ReactMarkdown from 'react-markdown';
-import { mockAnswer } from "../../../constants/mockAnswers";
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
@@ -50,16 +49,15 @@ export default function HeroSection() {
     setCitations([]);
     setShowFull(false);
 
-    let answerObj;
-    if (useMock) {
-      answerObj = mockAnswer;
-    } else {
-      answerObj = await askAssistant({ prompt: quickQuestion });
-      if (!answerObj) {
-        setQuickAnswer("❌ Failed to load answer.");
-        setLoading(false);
-        return;
-      }
+    const answerObj = await askAssistant({
+      prompt: quickQuestion,
+      useMock,
+    })
+
+    if (!answerObj) {
+      setQuickAnswer("❌ Failed to load answer.");
+      setLoading(false);
+      return;
     }
    
     setQuickAnswer(answerObj.answer);
