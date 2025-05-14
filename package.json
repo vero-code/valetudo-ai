@@ -26,6 +26,7 @@
     "react-router-dom": "^7.5.3",
     "react-select": "^5.10.1",
     "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
     "three": "^0.176.0"
   },
   "devDependencies": {

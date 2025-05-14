@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 import TooltipCitation from './TooltipCitation';
 
 /**
@@ -12,7 +13,9 @@ import TooltipCitation from './TooltipCitation';
  * @param {(val: boolean) => void} setShowFull
  */
 export default function QuickAnswerBox({ title, quickAnswer, citations = [], showFull, setShowFull }) {
-  const enhancedMarkdown = enhanceCitations(quickAnswer, citations);
+  const contentToRender = showFull
+    ? enhanceCitations(quickAnswer, citations)
+    : enhanceCitations(quickAnswer.split("\n").slice(0, 3).join("\n"), citations);
 
   return (
     <div
@@ -22,9 +25,10 @@ export default function QuickAnswerBox({ title, quickAnswer, citations = [], sho
     >
       {title && <h2 className="text-blue-600 font-semibold mb-2">{title}</h2>}
 
-      <div className="prose prose-sm max-w-none whitespace-pre-wrap body-text">
+      <div className="prose prose-sm max-w-none body-text space-y-4">
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
           components={{
             'tooltip-citation': ({ node, ...props }) => {
               const domain = props['data-domain'];
@@ -34,12 +38,7 @@ export default function QuickAnswerBox({ title, quickAnswer, citations = [], sho
             }
           }}
         >
-          {showFull
-            ? enhancedMarkdown
-            : enhanceCitations(
-                quickAnswer.split("\n").slice(0, 3).join("\n"),
-                citations
-              )}
+          {contentToRender}
         </ReactMarkdown>
       </div>
 
