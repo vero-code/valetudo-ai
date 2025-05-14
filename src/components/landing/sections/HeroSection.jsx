@@ -12,6 +12,10 @@ import { HomePageAskButton, GoToPromptPageButton } from '../../ui/Buttons';
 import { useAIAnswer } from '../../../hooks/useAIAnswer';
 import QuickAnswerBox from '../../ui/QuickAnswerBox';
 import ImageUpload from '../../ui/ImageUpload';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import * as Tooltip from '@radix-ui/react-tooltip';
+import { FaInfoCircle } from 'react-icons/fa';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
@@ -21,6 +25,8 @@ export default function HeroSection() {
   const [showFull, setShowFull] = useState(false);
   const [imageBase64, setImageBase64] = useState(null);
   const [fileName, setFileName] = useState('');
+  const [afterDate, setAfterDate] = useState(null);
+  const [beforeDate, setBeforeDate] = useState(null);
   const navigate = useNavigate();
 
   const color = useMotionValue(COLORS[0]);
@@ -40,7 +46,20 @@ export default function HeroSection() {
   const handleQuickSubmit = async () => {
     if (!quickQuestion.trim()) return;
     setShowFull(false);
-    await ask({ prompt: quickQuestion, imageBase64});
+
+    if (afterDate && beforeDate && afterDate > beforeDate) {
+      alert("❌ 'From date' cannot be after 'To date'.");
+      return;
+    }
+
+    const formatDate = (d) => d ? `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}` : undefined;
+
+    await ask({
+      prompt: quickQuestion,
+      imageBase64,
+      search_after_date_filter: formatDate(afterDate),
+      search_before_date_filter: formatDate(beforeDate),
+    });
   };
 
   const handleGoToAskPage = () => {
@@ -67,6 +86,49 @@ export default function HeroSection() {
           onChange={(e) => setQuickQuestion(e.target.value)}
           className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-[#272D45] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
         />
+
+        <div className="flex justify-center gap-4 mt-4 flex-wrap">
+          <div className="flex flex-col items-start">
+            <div className="flex items-center gap-1 mb-1">
+              <label className="text-sm font-medium text-gray-600">From date:</label>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <FaInfoCircle className="text-gray-500 cursor-help hover:text-blue-500" />
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-black text-white text-xs rounded px-3 py-2 shadow-md max-w-xs z-50"
+                    >
+                      Perplexity tries to prioritize sources in this range, but may include others if few are available.
+                      <Tooltip.Arrow className="fill-black" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </div>
+
+            <DatePicker
+              selected={afterDate}
+              onChange={(date) => setAfterDate(date)}
+              dateFormat="MM/dd/yyyy"
+              className="border rounded px-3 py-2 text-sm w-40"
+              placeholderText="MM/DD/YYYY"
+            />
+          </div>
+
+          <div className="flex flex-col items-start">
+            <label className="text-sm font-medium text-gray-600 mb-1">To date:</label>
+            <DatePicker
+              selected={beforeDate}
+              onChange={(date) => setBeforeDate(date)}
+              dateFormat="MM/dd/yyyy"
+              className="border rounded px-3 py-2 text-sm w-40"
+              placeholderText="MM/DD/YYYY"
+            />
+          </div>
+        </div>
 
         <ImageUpload
           onImageSelect={(base64, name) => {

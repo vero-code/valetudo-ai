@@ -17,8 +17,17 @@ export function useAIAnswer({ useMock = false } = {}) {
    * @param {Object} params
    * @param {string} params.prompt
    * @param {string} [params.followup]
+   * @param {string} [params.imageBase64]
+   * @param {string} [params.search_after_date_filter]
+   * @param {string} [params.search_before_date_filter]
    */
-  const ask = async ({ prompt, followup = null, imageBase64 = null }) => {
+  const ask = async ({
+    prompt,
+    followup = null,
+    imageBase64 = null,
+    search_after_date_filter,
+    search_before_date_filter,
+  }) => {
     if (!prompt.trim()) return;
 
     setAnswer("");
@@ -26,7 +35,14 @@ export function useAIAnswer({ useMock = false } = {}) {
     setLoading(true);
     setError(null);
 
-    const result = await getAnswer({ prompt, followup, imageBase64, useMock });
+    const result = await getAnswer({
+      prompt,
+      followup,
+      imageBase64,
+      useMock,
+      search_after_date_filter,
+      search_before_date_filter,
+    });
 
     if (!result) {
       setError("❌ Failed to get answer from assistant.");

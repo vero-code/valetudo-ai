@@ -25,6 +25,8 @@ def ask():
     prompt = data.get("prompt")
     followup = data.get("followup")
     image_base64 = data.get("imageBase64")
+    search_after = data.get("search_after_date_filter")
+    search_before = data.get("search_before_date_filter")
 
     if not prompt:
         return jsonify({"error": "Prompt is required"}), 400
@@ -56,27 +58,34 @@ def ask():
         }
     ]
 
+    extra_body={
+        "web_search_options": {
+            "search_context_size": "medium"
+        },
+        "search_domain_filter": [
+            "mayoclinic.org",
+            "clevelandclinic.org",
+            "medlineplus.gov",
+            "healthline.com",
+            "drugs.com",
+            "webmd.com",
+            "cdc.gov",
+            "ncbi.nlm.nih.gov",
+            "ema.europa.eu",
+            "uptodate.com",
+        ]
+    }
+
+    if search_after:
+        extra_body["search_after_date_filter"] = search_after
+    if search_before:
+        extra_body["search_before_date_filter"] = search_before
+
     try:
         response = client.chat.completions.create(
             model="sonar",
             messages=messages,
-            extra_body={
-                "web_search_options": {
-                    "search_context_size": "medium"
-                },
-                "search_domain_filter": [
-                    "mayoclinic.org",
-                    "clevelandclinic.org",
-                    "medlineplus.gov",
-                    "healthline.com",
-                    "drugs.com",
-                    "webmd.com",
-                    "cdc.gov",
-                    "ncbi.nlm.nih.gov",
-                    "ema.europa.eu",
-                    "uptodate.com",
-                ]
-            }
+            extra_body=extra_body
         )
 
         print("Prompt sent to API:", messages)
