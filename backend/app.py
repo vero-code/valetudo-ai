@@ -34,7 +34,6 @@ def ask():
             "content": (
                 "You are an artificial intelligence assistant."
                 "Provide concise, helpful, and polite responses."
-                "Respond in 1-3 sentences."
             ),
         },
         {
@@ -47,6 +46,23 @@ def ask():
         response = client.chat.completions.create(
             model="sonar",
             messages=messages,
+            extra_body={
+                "web_search_options": {
+                    "search_context_size": "medium"
+                },
+                "search_domain_filter": [
+                    "mayoclinic.org",
+                    "clevelandclinic.org",
+                    "medlineplus.gov",
+                    "healthline.com",
+                    "drugs.com",
+                    "webmd.com",
+                    "cdc.gov",
+                    "ncbi.nlm.nih.gov",
+                    "ema.europa.eu",
+                    "uptodate.com",
+                ]
+            }
         )
 
         print("Prompt sent to API:", messages)
