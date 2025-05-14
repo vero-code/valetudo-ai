@@ -15,6 +15,7 @@ import ImageUpload from '../../ui/ImageUpload';
 import DateRangePicker from '../../ui/DateRangePicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CountrySelect from '../../ui/CountrySelect';
+import LoadingIndicator from '../../ui/LoadingIndicator';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
@@ -118,9 +119,7 @@ export default function HeroSection() {
           <GoToPromptPageButton onClick={handleGoToAskPage} />
         </div>
 
-        {loading && (
-          <p className="mt-6 text-blue-600 font-medium animate-pulse">⏳ Thinking...</p>
-        )}
+        {loading && <LoadingIndicator />}
 
         {quickAnswer && (
           <QuickAnswerBox

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+import json
 
 load_dotenv()
 
@@ -36,8 +37,11 @@ def ask():
         {
             "role": "system",
             "content": (
-                "You are an artificial intelligence assistant."
-                "Provide concise, helpful, and polite responses."
+                "You are a trusted medical assistant.\n"
+                "Provide only evidence-based, concise and polite answers.\n"
+                "Use clear, professional language.\n"
+                "Avoid speculation.\n"
+                "Focus on relevance and safety."
             ),
         },
         {
@@ -89,9 +93,11 @@ def ask():
         ]
 
     try:
-        print("FULL REQUEST PAYLOAD:")
-        print("Messages:", messages)
-        print("Extra body:", extra_body)
+        # print("FULL REQUEST PAYLOAD:")
+        # print("Messages:")
+        # print(json.dumps(messages, indent=2, ensure_ascii=False))
+        # print("Extra body:")
+        # print(json.dumps(extra_body, indent=2, ensure_ascii=False))
 
         response = client.chat.completions.create(
             model="sonar-pro",

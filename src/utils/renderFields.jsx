@@ -56,7 +56,7 @@ export const renderFields = (category, inputs, handleInputChange, errors, setErr
         <>
           <span>I took</span>
           {input('drug1', 'Drug 1')}
-          <span>. How long should they wait before taking</span>
+          <span>. How long should I wait before taking</span>
           {input('drug2', 'Drug 2')}
           <span>?</span>
         </>

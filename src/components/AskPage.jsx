@@ -9,6 +9,7 @@ import AskForm from './ui/AskForm.jsx';
 import { handleClear, handleGoToBack } from '../utils/handlers';
 import { useAIAnswer } from '../hooks/useAIAnswer';
 import QuickAnswerBox from '../components/ui/QuickAnswerBox.jsx';
+import LoadingIndicator from './ui/LoadingIndicator.jsx';
 
 export default function AskPage() {
   const [category, setCategory] = useState('symptom');
@@ -20,8 +21,8 @@ export default function AskPage() {
   const [showFollowupFull, setShowFollowupFull] = useState(false);
   const navigate = useNavigate();
 
-  const { answer, citations, loading, ask } = useAIAnswer({ useMock: true });
-  const { answer: followupAnswer, citations: followupCitations, ask: askFollowup } = useAIAnswer({ useMock: true });
+  const { answer, citations, loading, ask } = useAIAnswer({ useMock: false });
+  const { answer: followupAnswer, citations: followupCitations, loading: followupLoading, ask: askFollowup } = useAIAnswer({ useMock: false });
 
   const clearHandler = handleClear(setCategory, setInputs, setErrors, setResult, setFollowup, () => {});
   const goToBackHandler = handleGoToBack(navigate);
@@ -88,11 +89,7 @@ export default function AskPage() {
           handleSubmit={handleSubmit}
         />
 
-        {loading && (
-          <div className="mt-6 body-text text-center">
-            🔄 Thinking...
-          </div>
-        )}
+        {loading && <LoadingIndicator />}
 
         {result && !loading && (
           <QuickAnswerBox
@@ -123,7 +120,7 @@ export default function AskPage() {
               />
               <SubmitFollowUpButton />
             </form>
-            {followup && followupAnswer && (
+            {followupAnswer && (
               <QuickAnswerBox
                 title="🔁 Follow-up Answer"
                 quickAnswer={followupAnswer}
@@ -134,6 +131,8 @@ export default function AskPage() {
             )}
           </div>
         )}
+
+        {followupLoading && <LoadingIndicator />}
       </div>
     </div>
   );
