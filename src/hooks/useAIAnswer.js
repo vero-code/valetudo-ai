@@ -20,6 +20,7 @@ export function useAIAnswer({ useMock = false } = {}) {
    * @param {string} [params.imageBase64]
    * @param {string} [params.search_after_date_filter]
    * @param {string} [params.search_before_date_filter]
+   * @param {string} [params.user_country]
    */
   const ask = async ({
     prompt,
@@ -27,6 +28,7 @@ export function useAIAnswer({ useMock = false } = {}) {
     imageBase64 = null,
     search_after_date_filter,
     search_before_date_filter,
+    user_country,
   }) => {
     if (!prompt.trim()) return;
 
@@ -42,6 +44,7 @@ export function useAIAnswer({ useMock = false } = {}) {
       useMock,
       search_after_date_filter,
       search_before_date_filter,
+      user_country,
     });
 
     if (!result) {

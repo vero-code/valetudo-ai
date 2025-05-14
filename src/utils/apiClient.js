@@ -18,6 +18,7 @@ export async function getAnswer({
   useMock = false,
   search_after_date_filter = null,
   search_before_date_filter = null,
+  user_country = null,
 }) {
   if (useMock) {
     return followup ? mockAnswerFollowup : mockAnswer;
@@ -30,6 +31,7 @@ export async function getAnswer({
       ...(imageBase64 && { imageBase64 }),
       ...(search_after_date_filter && { search_after_date_filter }),
       ...(search_before_date_filter && { search_before_date_filter }),
+      ...(user_country && { user_country }),
     };
 
     const response = await fetch('http://localhost:5000/api/ask', {

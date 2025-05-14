@@ -14,6 +14,7 @@ import QuickAnswerBox from '../../ui/QuickAnswerBox';
 import ImageUpload from '../../ui/ImageUpload';
 import DateRangePicker from '../../ui/DateRangePicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import CountrySelect from '../../ui/CountrySelect';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
@@ -25,6 +26,7 @@ export default function HeroSection() {
   const [fileName, setFileName] = useState('');
   const [afterDate, setAfterDate] = useState(null);
   const [beforeDate, setBeforeDate] = useState(null);
+  const [countryCode, setCountryCode] = useState(null);
   const navigate = useNavigate();
 
   const color = useMotionValue(COLORS[0]);
@@ -57,6 +59,7 @@ export default function HeroSection() {
       imageBase64,
       search_after_date_filter: formatDate(afterDate),
       search_before_date_filter: formatDate(beforeDate),
+      user_country: countryCode,
     });
   };
 
@@ -91,6 +94,10 @@ export default function HeroSection() {
             setAfterDate={setAfterDate}
             beforeDate={beforeDate}
             setBeforeDate={setBeforeDate}
+          />
+          <CountrySelect
+            countryCode={countryCode}
+            setCountryCode={setCountryCode}
           />
         </div>
 

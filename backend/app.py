@@ -27,6 +27,7 @@ def ask():
     image_base64 = data.get("imageBase64")
     search_after = data.get("search_after_date_filter")
     search_before = data.get("search_before_date_filter")
+    user_country = data.get("user_country")
 
     if not prompt:
         return jsonify({"error": "Prompt is required"}), 400
@@ -60,9 +61,21 @@ def ask():
 
     extra_body={
         "web_search_options": {
-            "search_context_size": "medium"
-        },
-        "search_domain_filter": [
+            "search_context_size": "medium",
+        }
+    }
+
+    if search_after:
+        extra_body["search_after_date_filter"] = search_after
+    if search_before:
+        extra_body["search_before_date_filter"] = search_before
+
+    if user_country:
+        extra_body["web_search_options"]["user_location"] = {
+            "country": user_country
+        }
+    else:
+        extra_body["search_domain_filter"] = [
             "mayoclinic.org",
             "clevelandclinic.org",
             "medlineplus.gov",
@@ -74,22 +87,17 @@ def ask():
             "ema.europa.eu",
             "uptodate.com",
         ]
-    }
-
-    if search_after:
-        extra_body["search_after_date_filter"] = search_after
-    if search_before:
-        extra_body["search_before_date_filter"] = search_before
 
     try:
+        print("FULL REQUEST PAYLOAD:")
+        print("Messages:", messages)
+        print("Extra body:", extra_body)
+
         response = client.chat.completions.create(
-            model="sonar",
+            model="sonar-pro",
             messages=messages,
             extra_body=extra_body
         )
-
-        print("Prompt sent to API:", messages)
-        print("Raw API response dict:", response.model_dump())
 
         content = response.choices[0].message.content
         citations = getattr(response, "citations", [])
