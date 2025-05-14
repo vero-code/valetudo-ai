@@ -24,6 +24,7 @@ def ask():
     data = request.get_json()
     prompt = data.get("prompt")
     followup = data.get("followup")
+    image_base64 = data.get("imageBase64")
 
     if not prompt:
         return jsonify({"error": "Prompt is required"}), 400
@@ -38,8 +39,21 @@ def ask():
         },
         {
             "role": "user",
-            "content": prompt if not followup else f"{prompt}\n\nFollow-up: {followup}"
-        },
+            "content": [
+                {
+                    "type": "text",
+                    "text": prompt if not followup else f"{prompt}\n\nFollow-up: {followup}"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": image_base64
+                    }
+                }
+            ] if image_base64 else (
+                prompt if not followup else f"{prompt}\n\nFollow-up: {followup}"
+            )
+        }
     ]
 
     try:

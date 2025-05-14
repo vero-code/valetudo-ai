@@ -8,7 +8,7 @@ import { mockAnswer, mockAnswerFollowup } from '../constants/mockAnswers';
  * @param {boolean} [options.useMock] - whether to use a mock response (defaults to false)
  * @returns {Promise<{ answer: string, citations: string[] } | null>}
  */
-export async function getAnswer({ prompt, followup = null, useMock = false }) {
+export async function getAnswer({ prompt, followup = null, imageBase64 = null, useMock = false }) {
   if (useMock) {
     if (followup) {
       return mockAnswerFollowup;
@@ -22,7 +22,7 @@ export async function getAnswer({ prompt, followup = null, useMock = false }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(followup ? { prompt, followup } : { prompt }),
+      body: JSON.stringify(followup ? { prompt, followup } : { prompt, imageBase64 }),
     });
 
     const data = await response.json();

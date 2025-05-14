@@ -11,13 +11,16 @@ import {
 import { HomePageAskButton, GoToPromptPageButton } from '../../ui/Buttons';
 import { useAIAnswer } from '../../../hooks/useAIAnswer';
 import QuickAnswerBox from '../../ui/QuickAnswerBox';
+import ImageUpload from '../../ui/ImageUpload';
 
 const COLORS = ["#0066FF", "#0FB8B8", "#00A3A3", "#0074D9"];
 
 export default function HeroSection() {
   const [quickQuestion, setQuickQuestion] = useState('');
-  const { answer: quickAnswer, citations, loading, error, ask } = useAIAnswer({ useMock: true });
+  const { answer: quickAnswer, citations, loading, error, ask } = useAIAnswer({ useMock: false });
   const [showFull, setShowFull] = useState(false);
+  const [imageBase64, setImageBase64] = useState(null);
+  const [fileName, setFileName] = useState('');
   const navigate = useNavigate();
 
   const color = useMotionValue(COLORS[0]);
@@ -37,7 +40,7 @@ export default function HeroSection() {
   const handleQuickSubmit = async () => {
     if (!quickQuestion.trim()) return;
     setShowFull(false);
-    await ask({ prompt: quickQuestion});
+    await ask({ prompt: quickQuestion, imageBase64});
   };
 
   const handleGoToAskPage = () => {
@@ -63,6 +66,18 @@ export default function HeroSection() {
           value={quickQuestion}
           onChange={(e) => setQuickQuestion(e.target.value)}
           className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-[#272D45] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+        />
+
+        <ImageUpload
+          onImageSelect={(base64, name) => {
+            setImageBase64(base64);
+            setFileName(name);
+          }}
+          imageName={fileName}
+          onClear={() => {
+            setImageBase64(null);
+            setFileName('');
+          }}
         />
 
         <div className="flex flex-row justify-center items-center gap-4 mt-6">

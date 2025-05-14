@@ -18,7 +18,7 @@ export function useAIAnswer({ useMock = false } = {}) {
    * @param {string} params.prompt
    * @param {string} [params.followup]
    */
-  const ask = async ({ prompt, followup = null }) => {
+  const ask = async ({ prompt, followup = null, imageBase64 = null }) => {
     if (!prompt.trim()) return;
 
     setAnswer("");
@@ -26,7 +26,7 @@ export function useAIAnswer({ useMock = false } = {}) {
     setLoading(true);
     setError(null);
 
-    const result = await getAnswer({ prompt, followup, useMock });
+    const result = await getAnswer({ prompt, followup, imageBase64, useMock });
 
     if (!result) {
       setError("❌ Failed to get answer from assistant.");
