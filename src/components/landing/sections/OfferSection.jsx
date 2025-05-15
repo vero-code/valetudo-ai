@@ -1,4 +1,3 @@
-import React from "react";
 import OfferGrid from "../grids/OfferGrid";
 
 const OfferSection = () => (
@@ -11,8 +10,8 @@ const OfferSection = () => (
     </div>
     <div className="w-full md:w-1/2 h-full flex">
       <img
-        src="/happy-man.png"
-        alt="Happy man using Valetudo"
+        src="/offer-section.png"
+        alt="Happy woman using Valetudo"
         className="w-full h-full object-cover rounded-xl shadow-lg"
       />
     </div>

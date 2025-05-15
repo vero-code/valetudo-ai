@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
 import {
   motion,
+  AnimatePresence,
   useMotionValue,
   useMotionTemplate,
   animate,
@@ -28,6 +29,7 @@ export default function HeroSection() {
   const [afterDate, setAfterDate] = useState(null);
   const [beforeDate, setBeforeDate] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const navigate = useNavigate();
 
   const color = useMotionValue(COLORS[0]);
@@ -71,13 +73,13 @@ export default function HeroSection() {
   return (
     <motion.section
       style={{ backgroundImage }}
-      className="relative min-h-screen grid place-content-center px-6 py-24 text-[#272D45] bg-white overflow-hidden "
+      className="relative min-h-screen grid place-content-center px-6 py-24 bg-white overflow-hidden "
     >
-      <div className="relative z-10 text-center max-w-2xl mx-auto">
-        <h1 className="heading sm:text-5xl leading-tight mb-4 bg-gradient-to-br bg-clip-text">
+      <div className="relative z-10 text-center max-w-4xl mx-auto">
+        <h1 className="heading sm:text-5xl leading-tight mb-10 bg-gradient-to-br bg-clip-text">
           Trusted medical answers in seconds
         </h1>
-        <p className="subheading mb-6">
+        <p className="subheading mb-10">
           ⚕️ No fake news. No guessing. With real scientific sources.
         </p>
 
@@ -86,37 +88,66 @@ export default function HeroSection() {
           placeholder="What to do if a 5-year-old feels dizzy?"
           value={quickQuestion}
           onChange={(e) => setQuickQuestion(e.target.value)}
-          className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm text-[#272D45] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+          className="w-full px-5 py-4 rounded-xl border border-gray-300 shadow-sm body-text placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
         />
 
-        <div className="flex justify-center gap-4 mt-4 flex-wrap">
-          <DateRangePicker
-            afterDate={afterDate}
-            setAfterDate={setAfterDate}
-            beforeDate={beforeDate}
-            setBeforeDate={setBeforeDate}
-          />
-          <CountrySelect
-            countryCode={countryCode}
-            setCountryCode={setCountryCode}
-          />
-        </div>
+        <button
+          onClick={() => setShowAdvanced(prev => !prev)}
+          className="mt-4 inline-flex items-center text-sm body-text text-blue-600  font-semibold hover:underline focus:outline-none"
+        >
+          {showAdvanced ? 'Hide advanced options' : 'Show advanced options'}
+        </button>
 
-        <ImageUpload
-          onImageSelect={(base64, name) => {
-            setImageBase64(base64);
-            setFileName(name);
-          }}
-          imageName={fileName}
-          onClear={() => {
-            setImageBase64(null);
-            setFileName('');
-          }}
-        />
+        <AnimatePresence>
+          {showAdvanced && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-6 bg-white border border-gray-300 shadow-sm rounded-xl p-6 overflow-visible"
+            >
+              <div className="flex justify-center gap-4 mt-4 flex-wrap">
+                <DateRangePicker
+                  afterDate={afterDate}
+                  setAfterDate={setAfterDate}
+                  beforeDate={beforeDate}
+                  setBeforeDate={setBeforeDate}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm
+                             focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                />
 
-        <div className="flex flex-row justify-center items-center gap-4 mt-6">
-          <HomePageAskButton onClick={handleQuickSubmit} />
-          <GoToPromptPageButton onClick={handleGoToAskPage} />
+                <div className="sm:col-span-2">
+                  <CountrySelect
+                    countryCode={countryCode}
+                    setCountryCode={setCountryCode}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm
+                               focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <ImageUpload
+                  onImageSelect={(b64, name) => {
+                    setImageBase64(b64);
+                    setFileName(name);
+                  }}
+                  imageName={fileName}
+                  onClear={() => {
+                    setImageBase64(null);
+                    setFileName('');
+                  }}
+                  className="w-full"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <HomePageAskButton onClick={handleQuickSubmit} className="min-w-[185px]"/>
+          <GoToPromptPageButton onClick={handleGoToAskPage} className="min-w-[185px]"/>
         </div>
 
         {loading && <LoadingIndicator />}

@@ -7,7 +7,7 @@ const CYCLES_PER_LETTER = 2;
 const SHUFFLE_TIME = 50;
 const CHARS = "!@#$%^&*():{};|,.<>/?";
 
-const ScramblingAskButton = ({ onClick }) => {
+const ScramblingAskButton = ({ onClick, className = "" }) => {
   const intervalRef = useRef(null);
   const [text, setText] = useState(TARGET_TEXT);
 
@@ -43,7 +43,13 @@ const ScramblingAskButton = ({ onClick }) => {
       onMouseLeave={stopScramble}
       whileHover={{ scale: 1.025 }}
       whileTap={{ scale: 0.975 }}
-      className="group relative flex justify-center items-center overflow-hidden rounded-full border border-blue-200 bg-gradient-to-r from-blue-500 to-blue-700 px-4 py-2 font-medium uppercase text-white transition-colors hover:text-white"
+      className={`
+        group relative flex justify-center items-center overflow-hidden
+        rounded-full border border-blue-200
+        bg-gradient-to-r from-blue-500 to-blue-700
+        px-4 py-2 font-medium uppercase text-white transition-colors hover:text-white
+        ${className}
+      `}
     >
       <div className="relative z-10 flex items-center gap-2">
         <LuTriangle className="rotate-90" />

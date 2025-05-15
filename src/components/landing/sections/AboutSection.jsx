@@ -1,5 +1,3 @@
-import React from "react";
-
 const AboutSection = () => (
   <div className="max-w-6xl mx-auto py-20 flex flex-col md:flex-row items-start">
     <div className="w-full md:w-1/2 pl-[63px] pr-[48px]">
@@ -13,7 +11,7 @@ const AboutSection = () => (
     </div>
     <div className="w-full md:w-1/2 flex justify-end">
       <img
-        src="/hero-tablet.png"
+        src="/about-section.png"
         alt="Tablet with AI Assistant"
         className="w-full max-w-sm aspect-square object-cover rounded-xl shadow-lg"
       />

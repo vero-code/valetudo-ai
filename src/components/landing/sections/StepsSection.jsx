@@ -4,7 +4,7 @@ const StepsSection = () => (
   <div className="max-w-6xl mx-auto py-20 flex flex-col md:flex-row items-start">
     <div className="w-full md:w-1/2 flex justify-center mb-10 md:mb-0">
       <img
-        src="/howitworks-mockup.png"
+        src="/steps-section.png"
         alt="How Valetudo Works"
         className="rounded-xl shadow-lg"
       />

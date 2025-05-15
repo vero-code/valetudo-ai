@@ -29,10 +29,10 @@ export default function AskForm({
         </div>
       )}
 
-      <div className="grid sm:grid-cols-3 gap-4">
-        <BackToHomeButton onClick={handleGoToBack} />
-        <PromptPageAskButton />
-        <ClearFormButton onClick={() => handleClear()} />
+      <div className="grid grid-flow-col gap-5">
+        <BackToHomeButton onClick={handleGoToBack} className="min-w-[50px]" />
+        <PromptPageAskButton className="min-w-[50px]"/>
+        <ClearFormButton onClick={() => handleClear()} className="min-w-[50px]" />
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&family=Martel+Sans:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&family=Martel+Sans:wght@300;400;500&display=swap');
 @import "tailwindcss";
 @tailwind base;
 @tailwind components;
@@ -14,7 +14,7 @@
   }
 
   .body-text {
-    @apply text-[18px] font-[300] font-['Martel_Sans'] text-[#272D45];
+    @apply text-[18px] font-['Martel_Sans'] text-[#272D45];
   }
 }
 

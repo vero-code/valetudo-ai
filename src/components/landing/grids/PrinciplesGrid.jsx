@@ -1,4 +1,3 @@
-import React from "react";
 import { principlesData } from "../data/principlesData";
 
 const PrinciplesGrid = () => (
@@ -6,7 +5,7 @@ const PrinciplesGrid = () => (
     {principlesData.map(([title, desc], i) => (
       <div key={i}>
         <h3 className="subheading mb-2 leading-tight">{title}</h3>
-        <p className="text-[18px] font-[300] font-['Martel_Sans'] text-[#272D45] leading-relaxed">{desc}</p>
+        <p className="body-text leading-relaxed">{desc}</p>
       </div>
     ))}
   </div>
