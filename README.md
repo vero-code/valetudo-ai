@@ -4,6 +4,11 @@
 
 The name *Valetudo* comes from Latin and means “health” 🩺. The project is designed for conscious users seeking reliable medical information: caring parents, patients, and medical students. Ask about symptoms, drug interactions, or safe alternatives — and get trustworthy answers instantly.
 
+## 🎥 Demo Video
+
+Watch Valetudo AI in action 👇:
+
+[![Watch the demo](https://img.youtube.com/vi/AX3nOh9LbTc/0.jpg)](https://www.youtube.com/watch?v=AX3nOh9LbTc)
 
 ## 🎯 Key Features
 
@@ -12,13 +17,23 @@ The name *Valetudo* comes from Latin and means “health” 🩺. The project is
 - **Limited to 10 trusted sources** for clarity
 - Filters by **date** and **user location**
 - **Image upload** for visual context (e.g. meds or conditions)
-- **Prompt templates** (7 categories) for common medical queries
+- **Prompt templates** (7 categories) for common medical queries:
+	-   Symptom-based advice
+	-   Drug interaction checks
+	-   Safety timing
+	-   Safer treatments
+	-   Compare effectiveness
+	-   Recommended exercises
+	-   Latest research
 - Follow-up input to clarify or expand your question
 - Prioritization of **local sources** when a country is selected
 - **Markdown formatting** and clean tables
 - Easily copy and open source links
 - Simple and user-friendly interface
 
+> Ask questions. Get trusted answers in seconds.
+
+<img src="screenshots/1-home.png" alt="Home screen" />
 
 ### 🔧 Integrated Features (per [Perplexity API documentation](https://docs.perplexity.ai)):
 
@@ -30,6 +45,9 @@ The name *Valetudo* comes from Latin and means “health” 🩺. The project is
 | Date Filtering | `search_after/before_date_filter` |
 | User Location Filter | `user_location` |
 
+> Upload an image — AI will analyze it too.
+
+<img src="screenshots/8-image-upload.png" alt="Image Upload" /> 
 
 ## 🧠 Tech Stack
 
@@ -112,6 +130,10 @@ The app will be available at [http://localhost:5173](http://localhost:5173)
 -   Choose a category, fill in the fields, and generate a ready-to-send query
 -   Use the **Follow-up** input to deepen the conversation
 
+> Save time with prompts and follow-up questions.
+
+<img src="screenshots/10-prompts.png" alt="Prompts screen" />
+
 
 ## 📁 Project Structure
 
@@ -120,6 +142,7 @@ valetudo-ai/
 
 ├── backend/         # Flask backend API
 ├── public/          # Static files
+├── screenshots/     # UI Images
 ├── src/
 │ ├── assets/        # Media resources
 │ ├── components/    # React components
