@@ -104,6 +104,32 @@ python app.py
 The app will be available at [http://localhost:5173](http://localhost:5173)
 
 
+## ☁️ Deployment (Vercel)
+
+The project is configured for easy deployment to **Vercel** as a monorepo (Frontend + Python Serverless Backend).
+
+### 1. Install Vercel CLI (optional)
+```sh
+npm i -g vercel
+```
+
+### 2. Deploy
+Run the following command in the root directory:
+```sh
+vercel
+```
+
+### 3. Set Environment Variables
+In your Vercel Dashboard, go to **Settings -> Environment Variables** and add:
+- `PERPLEXITY_API_KEY`: Your Perplexity API key.
+
+### 4. Production Build
+For the final production deployment:
+```sh
+vercel --prod
+```
+
+
 ## 🧪 Testing the App
 
 ### 1. Ask a health question
